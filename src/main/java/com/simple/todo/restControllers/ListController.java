@@ -14,7 +14,7 @@ public class ListController {
 //	public int getCountLists() {
 //		return 0;
 //	}
-
+	//Возвращаемые значения только для отладки
 	@GetMapping("/")
 	public String getArrayLists(@RequestParam(name = "count", defaultValue = "10") int count, Model model) {
 		if (count <= 0) {
