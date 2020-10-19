@@ -53,7 +53,7 @@ public class ListDeal {
 		return id;
 	}
 
-	//by deafult 10 deals must be returned and if > 100 else how needed (= count)
+	//by default 10 deals must be returned and if > 100 else how needed (= count)
 //	public Deal[] getDeals(int count) {
 //		return Deals;
 //	}
