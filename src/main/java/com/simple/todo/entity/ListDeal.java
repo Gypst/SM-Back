@@ -1,5 +1,7 @@
 package com.simple.todo.entity;
 
+import org.hibernate.annotations.Table;
+
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+//@Table(name="list")
 public class ListDeal {
 
 	@Id

@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: simple
+      changes:
+        - createTable:
+            tableName: list
+            columns:
+              - column:
+                  name: id
+                  type: GUID
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dateCreation
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dateEdition
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: simple
+      changes:
+        - insert:
+            tableName: list
+            columns:
+              - column:
+                  name: name
+                  value: TODO-app
+              - column:
+                  name: dateCreation
+                  value: 21-10-20
+              - column:
+                  name: dateEdition
+                  value: 21-10-20

@@ -3,21 +3,24 @@ package com.simple.todo.restControllers;
 import com.simple.todo.entity.Deal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/deal")
 public class DealController {
 
-	@GetMapping("/deal")
+	@GetMapping("/")
 	public Deal getDeal(long id){return null;}
 
-	@GetMapping("/addDeal")
+	@PostMapping("/addDeal")
 	public boolean addDeal(@RequestParam(name = "name") String name){return false;}
 
-	@GetMapping("/deleteDeal")
+	@PostMapping("/deleteDeal")
 	public boolean deleteDeal(@RequestParam(name = "id") long id){return  false;}
 
-	@GetMapping("/deleteAllDeal")
+	@PostMapping("/deleteAllDeal")
 	public boolean deleteAllDeal(){return  false;}
 
 }
