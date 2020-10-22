@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/deal")
-public class DealController {
+public class DealsController {
 
 	@GetMapping("/")
 	public Deal getDeal(long id){return null;}

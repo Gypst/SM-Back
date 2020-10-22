@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/list")
-public class ListController {
+public class ListsController {
 
 //	@GetMapping("/getCountList")
 //	public int getCountLists() {
