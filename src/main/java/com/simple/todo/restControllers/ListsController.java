@@ -14,16 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 /*
 @Post методы не должны содержать в URL передаваемые аргументы, они должны быть в теле зашифрованы.
  */
+//Возвращаемые значения только для отладки
 @Controller
 @RequestMapping("/list")
 public class ListsController {
 
-//	@GetMapping("/getCountList")
-//	public int getCountLists() {
-//		return 0;
-//	}
-	//Возвращаемые значения только для отладки
-	@GetMapping("/")
+	@GetMapping()
 	public String getArrayLists(@RequestParam(name = "count", defaultValue = "10") int count, Model model) {
 		if (count <= 0) {
 			count = 10;
@@ -32,6 +28,11 @@ public class ListsController {
 
 		model.addAttribute("lists", count);
 		return "getList";
+	}
+
+	@GetMapping("/{id}")
+	public String getList(@RequestParam(name = "id") int id, Model model){
+		return null;
 	}
 
 	@PostMapping("/addList")
