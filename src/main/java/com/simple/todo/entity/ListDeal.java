@@ -13,23 +13,45 @@ import lombok.Setter;
 @Table(name="LISTS")
 public class ListDeal {
 
+	/**
+	 * ID of the list in database
+	 *
+	 * @param id New value for each list.
+	 * @return The current id of this list
+	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO) // это не нужно UUID выдекавать в конструкторе
 	@Column(name = "id", nullable = false)
 	@Getter
 	private UUID id;
 
+	/**
+	 * Name of the list.
+	 * -- SETTER --
+	 * Changes the name of this list.
+	 *
+	 * @param name The new value.
+	 */
 	@Column(name = "name", nullable = false)
 	@Getter @Setter
 	private String  name;
 
+	/**
+	 * Date of creation of the list. It's automatically added date when was created
+	 */
 	@Column(name = "dateCreation", nullable = false)
 	@Getter
-	private Date    dateCreation;
+	private final Date    dateCreation; //maybe must "final"
 
+	/**
+	 * Date of edition of the list
+	 * -- SETTER --
+	 * Changes the date of edition for this list.
+	 *
+	 * @param name The new value.
+	 */
 	@Column(name = "dateEdition", nullable = false)
 	@Getter @Setter
-	private Date    dateEdition;
+	private Date    dateEdition; //TODO: automatically add date/ Dell setter
 
 	protected ListDeal() {
 		Date date = new Date();

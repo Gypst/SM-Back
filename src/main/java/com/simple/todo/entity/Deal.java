@@ -20,7 +20,6 @@ public class Deal {
 	 * @return The current id of this deal
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO) // это не нужно идентификатор в контрукторе выдавать
 	@Column(name = "id", nullable = false)
 	@Getter
 	private UUID    id;
@@ -74,9 +73,8 @@ public class Deal {
 	 */
 	@Column(name = "dateCreation", nullable = false)
 	@Getter
-	private Date    dateCreation;
+	private final Date    dateCreation; //maybe must "final"
 
-	//TODO: It's automatically added date when was edited?
 	/**
 	 * Date of edition of the deal
 	 * -- SETTER --
@@ -86,7 +84,7 @@ public class Deal {
 	 */
 	@Column(name = "dateEdition", nullable = false)
 	@Getter @Setter
-	private Date    dateEdition;
+	private Date    dateEdition; //TODO: automatically add date/ Dell setter
 
 	/**
 	 * ID of the list which is foreign key.

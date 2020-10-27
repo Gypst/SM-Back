@@ -1,15 +1,19 @@
 package com.simple.todo.restControllers;
 
+import com.simple.todo.entity.Database;
 import com.simple.todo.entity.Deal;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/deal")
+import java.util.List;
+import java.util.Map;
+
+/**
+ * RestController for deals from database
+ */
+@RestController
+@RequestMapping("deal")
 public class DealsController {
+	private List<Map<String, String>> bdEmu = Database.bdEmu;
 
 	@GetMapping("/")
 	public Deal getDeal(long id){return null;}
