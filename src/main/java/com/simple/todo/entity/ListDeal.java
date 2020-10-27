@@ -1,22 +1,21 @@
 package com.simple.todo.entity;
 
-import org.hibernate.annotations.Table;
-
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-//@Table(name="list")
+@Table(name="LISTS")
 public class ListDeal {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
 	private long    id;
+	@Column(name = "name", nullable = false)
 	private String  name;
+	@Column(name = "dateCreation", nullable = false)
 	private Date    dateCreation;
+	@Column(name = "dateEdition", nullable = false)
 	private Date    dateEdition;
 
 	protected ListDeal() {}

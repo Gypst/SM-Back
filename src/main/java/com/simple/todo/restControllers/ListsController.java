@@ -1,50 +1,70 @@
 package com.simple.todo.restControllers;
 
-import org.springframework.stereotype.Controller;
+import com.simple.todo.exceptions.NotFoundException;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-/*
-Надо переназначить мапинги и использовать нужные виды запросов,
-а не везде GetMapping. Например, для загрузки нового листа нельзя использовать Get,
-так как он не подходит под его характер (идемподентность): он меняет данные сервера
- */
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /*
 @Post методы не должны содержать в URL передаваемые аргументы, они должны быть в теле зашифрованы.
  */
 //Возвращаемые значения только для отладки
-@Controller
-@RequestMapping("/list")
+@RestController
+@RequestMapping("list")
 public class ListsController {
+	private int counterOfLists = 3;
+	private List<Map<String, String>> bdEmu = new ArrayList<Map<String, String>>() {{
+		add(new HashMap<String, String>() {{ put("id", "1"); put("text", "First message"); }});
+		add(new HashMap<String, String>() {{ put("id", "2"); put("text", "Second message"); }});
+		add(new HashMap<String, String>() {{ put("id", "3"); put("text", "Third message"); }});
+	}};
 
-	@GetMapping()
-	public String getArrayLists(@RequestParam(name = "count", defaultValue = "10") int count, Model model) {
-		if (count <= 0) {
-			count = 10;
-		}
-		count = count > 100 ? 10 : count;
-
-		model.addAttribute("lists", count);
-		return "getList";
+	@GetMapping
+	public List<Map<String, String >> getArrayLists(@RequestParam(name = "count", defaultValue = "10") int count, Model model) {
+//		if (count <= 0) {
+//			count = 10;
+//		}
+//		count = count > 100 ? 10 : count;
+//
+//		model.addAttribute("lists", count);
+		return bdEmu;
 	}
 
-	@GetMapping("/{id}")
-	public String getList(@RequestParam(name = "id") int id, Model model){
-		return null;
+	@GetMapping("{id}")
+	public Map<String, String> getList(@PathVariable String id){
+		return getListFromDB(id);
 	}
 
-	@PostMapping("/addList")
-	public String addList(@RequestParam(name = "name", required = true) String name, Model model){
-		model.addAttribute("name", name);
-		return "addList";
+	private Map<String, String> getListFromDB(String id) {
+		return bdEmu.stream().filter(bdEmu -> bdEmu.get("id").equals(id))
+				.findFirst()
+				.orElseThrow(NotFoundException::new);
 	}
 
-	@PostMapping("/deleteList")
-	public String deleteList(@RequestParam(name = "id") long id, Model model){
-		model.addAttribute("text", ("You delete list with id = " + id));
-		return "text";
+	@PostMapping
+	public Map<String, String> addList(@RequestBody Map<String, String> list){
+		list.put("id", String.valueOf(++counterOfLists));
+		return list;
+	}
+
+	@PutMapping("{id}")
+	public Map<String, String> changeList(@PathVariable String id, @RequestBody Map<String, String> message){
+		Map<String, String> messageFromDB= getListFromDB(message.get("id"));
+
+		messageFromDB.putAll(message);
+		messageFromDB.put("id", id);
+
+		return messageFromDB;
+	}
+
+	@DeleteMapping("{id}")
+	public void deleteList(@PathVariable String id){
+		Map<String, String> message = getList(id);
+		bdEmu.remove(message);
 	}
 
 	@PostMapping("/deleteAllList")

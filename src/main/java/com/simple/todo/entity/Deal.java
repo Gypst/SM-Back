@@ -2,23 +2,30 @@ package com.simple.todo.entity;
 
 import java.util.Date;
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "DEALS")
 public class Deal {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
 	private long    id;
+	@Column(name = "name", nullable = false)
 	private String  name;
+	@Column(name = "description")
 	private String  description;
+	@Column(name = "priority")
 	private short   priority; //from 1 to 5
+	@Column(name = "isDone")
 	private boolean isDone;
+	@Column(name = "dateCreation", nullable = false)
 	private Date    dateCreation;
+	@Column(name = "dateEdition", nullable = false)
 	private Date    dateEdition;
+	@Column(name = "List_id")
+	private long List_id;
 
 	protected Deal() {}
 
