@@ -25,6 +25,7 @@ public class ListsController {
 
 	@GetMapping
 	public List<Map<String, String >> getArrayLists(@RequestParam(name = "count", defaultValue = "10") int count, Model model) {
+		// TODO: нужна сортировка филттрация и пагинация
 //		if (count <= 0) {
 //			count = 10;
 //		}
@@ -46,6 +47,7 @@ public class ListsController {
 	}
 
 	@PostMapping
+	// TODO: можно просто пустым оставить пост метод или нужно доваить add..
 	public Map<String, String> addList(@RequestBody Map<String, String> list){
 		list.put("id", String.valueOf(++counterOfLists));
 		return list;

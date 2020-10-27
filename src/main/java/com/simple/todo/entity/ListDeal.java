@@ -1,24 +1,41 @@
 package com.simple.todo.entity;
 
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * List entity that displays a table in a database
+ */
 @Entity
 @Table(name="LISTS")
 public class ListDeal {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO) // это не нужно UUID выдекавать в конструкторе
 	@Column(name = "id", nullable = false)
-	private long    id;
+	@Getter
+	private UUID id;
+
 	@Column(name = "name", nullable = false)
+	@Getter @Setter
 	private String  name;
+
 	@Column(name = "dateCreation", nullable = false)
+	@Getter
 	private Date    dateCreation;
+
 	@Column(name = "dateEdition", nullable = false)
+	@Getter @Setter
 	private Date    dateEdition;
 
-	protected ListDeal() {}
+	protected ListDeal() {
+		Date date = new Date();
+		this.dateCreation = date;
+		this.dateEdition = date;
+	}
 
 	public ListDeal(String name) {
 		this.name = name;
@@ -34,34 +51,4 @@ public class ListDeal {
 				id, name, dateCreation, dateEdition);
 	}
 
-	public Date getDateCreation() {
-		return dateCreation;
-	}
-
-	public Date getDateEdition() {
-		return dateEdition;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	//Нужен ли в сущности сеттер? В примере не было сеттеров https://spring.io/guides/gs/accessing-data-jpa/
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	//by default 10 deals must be returned and if > 100 else how needed (= count)
-//	public Deal[] getDeals(int count) {
-//		return Deals;
-//	}
-
-	//Вопрос аналогичен вопросу с сеттером https://spring.io/guides/gs/accessing-data-jpa/
-	public ListDeal addDeal(String name){
-		return  this;
-	}
 }

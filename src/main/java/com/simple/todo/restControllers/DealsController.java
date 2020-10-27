@@ -23,4 +23,5 @@ public class DealsController {
 	@PostMapping("/deleteAllDeal")
 	public boolean deleteAllDeal(){return  false;}
 
+	// TODO: не хватает метода посмотреть все дела в списке с фильрацией сортировкой и пагинацией
 }
