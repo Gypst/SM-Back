@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
+/**
+ * Java-doc
+ */
+@Controller // TODO: RestContrioller
 @RequestMapping("/deal")
 public class DealsController {
 
@@ -22,5 +25,7 @@ public class DealsController {
 
 	@PostMapping("/deleteAllDeal")
 	public boolean deleteAllDeal(){return  false;}
+
+	// TODO: не хватает метода посмотреть все дела в списке с фильрацией сортировкой и пагинацией
 
 }

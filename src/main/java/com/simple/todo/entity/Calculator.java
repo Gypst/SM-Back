@@ -5,6 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * TODO: я так понимаю это просто тестовый класс
+ */
 @Controller
 @RequestMapping("/calculator")
 public class Calculator {

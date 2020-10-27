@@ -7,85 +7,98 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Java-doc и у полей тоже
+ */
 @Entity
+// не зватает указания в какой таблице лежит
 public class Deal {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long    id;
-	private String  name;
-	private String  description;
-	private short   priority; //from 1 to 5
-	private boolean isDone;
-	private Date    dateCreation;
-	private Date    dateEdition;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // это не нужно идентификатор в контрукторе выдавать
+    private long id; // TODO: тип должен быть UUID
 
-	protected Deal() {}
+    private String name;
 
-	public Deal(String name, String description, short priority) {
-		this.name = name;
-		this.description = description;
-		this.priority = priority;
-		this.isDone = false;
-		Date date = new Date();
-		this.dateCreation = date;
-		this.dateEdition = date;
-	}
+    private String description;
 
-	@Override
-	public String toString() {
-		return String.format(
-				"Deal[id=%d, name='%s', description='%s']",
-				id, name, description);
-	}
+    private short priority; //from 1 to 5  // TODO: приоритер сделать перечислением
 
-	public Date getDateCreation() {
-		return dateCreation;
-	}
+    private boolean isDone;
 
-	public Date getDateEdition() {
-		return dateEdition;
-	}
+    private Date dateCreation;
 
-	public String getName() {
-		return name;
-	}
+    private Date dateEdition;
 
-	public String getDescription() {
-		return description;
-	}
+    // TODO: у всех поелй должно быть принудительно указано в какой колонке лежат данные
 
-	public boolean isDone() {
-		return isDone;
-	}
+    protected Deal() {
+    }
 
-	public short getPriority() {
-		return priority;
-	}
+    public Deal(String name, String description, short priority) {
+        this.name = name;
+        this.description = description;
+        this.priority = priority;
+        this.isDone = false;
+        Date date = new Date();
+        this.dateCreation = date;
+        this.dateEdition = date;
+    }
 
-	public long getId() {
-		return id;
-	}
+    @Override
+    public String toString() {
+        return String.format(
+                "Deal[id=%d, name='%s', description='%s']",
+                id, name, description);
+    }
 
-	//Нужен ли в сущности сеттер? В примере не было сеттеров https://spring.io/guides/gs/accessing-data-jpa/
-	public void setName(String name) {
-		this.name = name;
-	}
+    // TODO: все геттеры / сеттеры легко заменяются на аннотации @Getter / @Setter
+    public Date getDateCreation() {
+        return dateCreation;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public Date getDateEdition() {
+        return dateEdition;
+    }
 
-	public void setDone() {
-		isDone = true;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public  void  setUnDone(){
-		isDone = false;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setPriority(short priority) {
-		this.priority = priority;
-	}
+    public boolean isDone() {
+        return isDone;
+    }
 
+    public short getPriority() {
+        return priority;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    //Нужен ли в сущности сеттер? В примере не было сеттеров https://spring.io/guides/gs/accessing-data-jpa/
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDone() {
+        isDone = true;
+    }
+
+    public void setUnDone() {
+        isDone = false;
+    }
+
+    public void setPriority(short priority) {
+        this.priority = priority;
+    }
 }

@@ -8,13 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Java-doc
+ */
 @Entity
 //@Table(name="list")
 public class ListDeal {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long    id;
+	@GeneratedValue(strategy=GenerationType.AUTO) // это не нужно UUID выдекавать в конструкторе
+	private long    id; // тип идентификатора UUID
 	private String  name;
 	private Date    dateCreation;
 	private Date    dateEdition;
@@ -35,6 +38,8 @@ public class ListDeal {
 				id, name, dateCreation, dateEdition);
 	}
 
+
+	// TODO: методы герреты и сеттеры успещно зхаменяются на анотации @Getter/@Setter lomboka
 	public Date getDateCreation() {
 		return dateCreation;
 	}
@@ -65,4 +70,5 @@ public class ListDeal {
 	public ListDeal addDeal(String name){
 		return  this;
 	}
+	// TODO: не понял зачем этот метод
 }
