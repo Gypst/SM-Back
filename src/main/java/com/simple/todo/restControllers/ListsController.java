@@ -15,7 +15,7 @@ import java.util.Map;
 //Возвращаемые значения только для отладки
 
 /**
- * RestController for lists from database
+ * RestController for lists from database.
  */
 @RestController
 @RequestMapping("list")
@@ -37,14 +37,20 @@ public class ListsController {
 		count = count > 100 ? 10 : count;
 
 		//Reverse order
-		List<Map<String, String >> recivedDB = new ArrayList<>(count);
+		List<Map<String, String >> receivedDB = new ArrayList<>(count);
 		do {
-			recivedDB.add(getListFromDB(Integer.toString(count)));
+			receivedDB.add(getListFromDB(Integer.toString(count)));
 		} while (--count > 0);
 
-		return recivedDB;
+		return receivedDB;
 	}
 
+	/**
+	 * Receive list with the current id via getLustFromDB() function.
+	 *
+	 * @param id Id of the list.
+	 * @return Receive list with the current id.
+	 */
 	@GetMapping("{id}")
 	public Map<String, String> getList(@PathVariable String id){
 		return getListFromDB(id);
@@ -62,40 +68,55 @@ public class ListsController {
 				.orElseThrow(NotFoundException::new);
 	}
 
+	/**
+	 * Adding a new list to the database.
+	 *
+	 * @param list Required list which will be added to the database
+	 * @return
+	 */
 	@PostMapping
 	public Map<String, String> addList(@RequestBody Map<String, String> list){
 		list.put("id", String.valueOf(Database.counterOfLists += 1));
 		return list;
 	}
 
+	/**
+	 * Update a list with the current id.
+	 *
+	 * @param id ID of updating list.
+	 * @param message Key-value which will exchanging old value by id.
+	 * @return Updated database.
+	 */
+	//TODO: Check working
 	@PutMapping("{id}")
-	public Map<String, String> changeList(@PathVariable String id, @RequestBody Map<String, String> message){
-		Map<String, String> messageFromDB= getListFromDB(message.get("id"));
+	public List<Map<String, String>> changeList(@PathVariable String id, @RequestBody Map<String, String> message){
 
-		messageFromDB.putAll(message);
-		messageFromDB.put("id", id);
+//		Map<String, String> messageFromDB = getListFromDB(message.get("id"));
+//		messageFromDB.putAll(message);
+//		messageFromDB.put("id", id); //or "message.get("id")" instead "id"?
 
-		return messageFromDB;
+		dbEmu.remove(Integer.parseInt(id));
+		dbEmu.add(Integer.parseInt(id), message);
+		return dbEmu;
 	}
 
+	/**
+	 * Delete list with current id.
+	 *
+	 * @param id ID of deleting list.
+	 */
 	@DeleteMapping("{id}")
 	public void deleteList(@PathVariable String id){
 		Map<String, String> message = getList(id);
 		dbEmu.remove(message);
 	}
 
+	/**
+	 * Delete all lists from database.
+	 */
 	@PostMapping("/deleteAllList")
-	public String deleteAllList(Model model){
-		model.addAttribute("text", "You delete all lists =(");
-		return "text";
+	public String deleteAllList(){
+		return null;
 	}
 
-	@GetMapping("/test")
-	public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-		if (name.equals("Tonny")){
-			name = "But not you! 0_0";
-		}
-		model.addAttribute("name", name);
-		return "greeting";
-	}
 }

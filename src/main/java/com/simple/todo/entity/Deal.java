@@ -55,7 +55,7 @@ public class Deal {
 	 */
 	@Column(name = "priority")
 	@Getter @Setter
-	private short   priority; //from 1 to 5 // TODO: приоритер сделать перечислением
+	private Priority priority; //from 1 to 5
 
 	/**
 	 * Priority of the person. It's may be done(true) or undone(false).
@@ -104,7 +104,7 @@ public class Deal {
 		this.dateEdition = date;
 	}
 
-	public Deal(String name, String description, short priority) {
+	public Deal(String name, String description, Priority priority) {
 		this.name = name;
 		this.description = description;
 		this.priority = priority;
