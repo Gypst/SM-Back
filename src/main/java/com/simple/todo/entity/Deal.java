@@ -64,14 +64,14 @@ public class Deal {
 	 *
 	 * @param name The new value.
 	 */
-	@Column(name = "isDone")
+	@Column(name = "is_done")
 	@Getter @Setter
 	private boolean isDone;
 
 	/**
 	 * Date of creation of the deal. It's automatically added date when was created
 	 */
-	@Column(name = "dateCreation", nullable = false)
+	@Column(name = "creation_date", nullable = false)
 	@Getter
 	private final Date    dateCreation; //maybe must "final"
 
@@ -82,9 +82,9 @@ public class Deal {
 	 *
 	 * @param name The new value.
 	 */
-	@Column(name = "dateEdition", nullable = false)
+	@Column(name = "edition_date", nullable = false)
 	@Getter @Setter
-	private Date    dateEdition; //TODO: automatically add date/ Dell setter
+	private Date    dateEdition; //TODO: automatically add date/ Dell setter. Modify dateEdition in all other setters.
 
 	/**
 	 * ID of the list which is foreign key.
@@ -93,9 +93,9 @@ public class Deal {
 	 *
 	 * @param name The new value.
 	 */
-	@Column(name = "List_id")
+	@Column(name = "list_id")
 	@Getter @Setter
-	private long List_id;
+	private UUID List_id;
 
 	protected Deal() {
 		this.isDone = false;

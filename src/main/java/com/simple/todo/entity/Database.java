@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Database {
-	public static int counterOfLists = 5;
+	public static int counterOfLists = 12;
 	public static List<Map<String, String>> bdEmu = new ArrayList<Map<String, String>>() {{
 		add(new HashMap<String, String>() {{ put("id", "1"); put("text", "First message deal"); }});
 		add(new HashMap<String, String>() {{ put("id", "2"); put("text", "Second message deal"); }});
@@ -19,6 +19,6 @@ public class Database {
 		add(new HashMap<String, String>() {{ put("id", "9"); put("text", "Take over the world"); }});
 		add(new HashMap<String, String>() {{ put("id", "10"); put("text", "Take over the world"); }});
 		add(new HashMap<String, String>() {{ put("id", "11"); put("text", "Take over the world"); }});
-		add(new HashMap<String, String>() {{ put("id", "12"); put("text", "Take over the world"); }});
+		add(new HashMap<String, String>() {{ put("id", "12"); put("text", "Fin"); }});
 	}};
 }

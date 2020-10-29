@@ -38,7 +38,7 @@ public class ListDeal {
 	/**
 	 * Date of creation of the list. It's automatically added date when was created
 	 */
-	@Column(name = "dateCreation", nullable = false)
+	@Column(name = "creation_date", nullable = false)
 	@Getter
 	private final Date    dateCreation; //maybe must "final"
 
@@ -49,7 +49,7 @@ public class ListDeal {
 	 *
 	 * @param name The new value.
 	 */
-	@Column(name = "dateEdition", nullable = false)
+	@Column(name = "edition_date", nullable = false)
 	@Getter @Setter
 	private Date    dateEdition; //TODO: automatically add date/ Dell setter
 

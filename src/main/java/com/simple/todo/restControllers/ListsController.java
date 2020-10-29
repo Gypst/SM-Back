@@ -5,9 +5,7 @@ import com.simple.todo.exceptions.NotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
 @Post методы не должны содержать в URL передаваемые аргументы, они должны быть в теле зашифрованы.
@@ -76,7 +74,10 @@ public class ListsController {
 	 */
 	@PostMapping
 	public Map<String, String> addList(@RequestBody Map<String, String> list){
-		list.put("id", String.valueOf(Database.counterOfLists += 1));
+		Map<String, String> toInsert = list;
+		int t = ++Database.counterOfLists;
+		toInsert.put("id", Integer.toString(t));
+		dbEmu.add(list);
 		return list;
 	}
 
@@ -107,8 +108,13 @@ public class ListsController {
 	 */
 	@DeleteMapping("{id}")
 	public void deleteList(@PathVariable String id){
-		Map<String, String> message = getList(id);
-		dbEmu.remove(message);
+		int index = Integer.parseInt(id);
+		dbEmu.remove(--index);
+
+		Map<String, String> delGup = new HashMap<String, String>();
+		delGup.put("id", id);
+		delGup.put("text", "Deleted");
+		dbEmu.add(index, delGup);
 	}
 
 	/**
