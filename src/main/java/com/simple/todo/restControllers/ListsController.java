@@ -1,9 +1,15 @@
 package com.simple.todo.restControllers;
 
+import com.simple.todo.dto.ListsResponse;
 import com.simple.todo.entity.Database;
+import com.simple.todo.entity.ListDeal;
 import com.simple.todo.exceptions.NotFoundException;
-import org.springframework.ui.Model;
+import com.simple.todo.service.ListsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.*;
 
@@ -19,6 +25,17 @@ import java.util.*;
 @RequestMapping("list")
 public class ListsController {
 	private List<Map<String, String>> dbEmu = Database.bdEmu;
+
+	@PostMapping("/testAdd")
+	public ListsResponse testAdd(@RequestParam(name = "t", defaultValue = "List name") String text){
+		ListDeal listDeal = new ListDeal(text);
+		Pageable pageable = new Pageable;
+		final Page<ListDeal> page = new PageImpl<>(listDeal, pageable, 1);
+		page.toSet(listDeal);
+		ListsResponse(1, 1, page);
+
+		return
+	}
 
 	/**
 	 * Receive all lists from database.
