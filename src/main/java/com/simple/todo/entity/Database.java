@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Database {
+public class Database { // TODO: это скорее всего не нужно уже, данные в базе храниться будут
 	public static int counterOfLists = 12;
 	public static List<Map<String, String>> bdEmu = new ArrayList<Map<String, String>>() {{
 		add(new HashMap<String, String>() {{ put("id", "1"); put("text", "First message deal"); }});

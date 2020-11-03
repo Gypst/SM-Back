@@ -8,4 +8,12 @@
     <include  file="db/changelog/changes/Lists.xml"/>
     <include  file="db/changelog/changes/Deals.xml"/>
 
+    <!--
+    TODO: имена файлов миграций лучше давать исходя из шаблона YYYYMMDDHHmmSS_осмысленная_фраза_на_английском_языке
+    таким образом будет понятно в какой последовательности писались миграции без заглядывания с свойства файла
+
+    идентификатор changeSet YYYYMMDDHHmmSS_число_осмысленная_фраза_на_английском_языке
+    -->
+
+
 </databaseChangeLog> 

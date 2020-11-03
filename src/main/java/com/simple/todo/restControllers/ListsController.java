@@ -2,6 +2,7 @@ package com.simple.todo.restControllers;
 
 import com.simple.todo.entity.Database;
 import com.simple.todo.exceptions.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +16,19 @@ import java.util.*;
 /**
  * RestController for lists from database.
  */
+// TODO: java-doc лучше писать на русском языке, т.к. команда разработчиков русскоязычная
 @RestController
 @RequestMapping("list")
 public class ListsController {
-	private List<Map<String, String>> dbEmu = Database.bdEmu;
+
+    private List<Map<String, String>> dbEmu = Database.bdEmu;
+    // TODO: вместо этого нам нужны сервисы и интерфейсы к ним. в рестах сервисы подключаются через интерфейсы
+    //  и аннотоцию @Autowired
+    //  интерфейсы нужны к сервисам, чтоб мы могли быстро подменить реализацию
+
+    // TODO: если метод rest что-то возвращает, то лучше это делать не через Map<String, String>, т.к. объект может быть
+    //  сложнее чем набор строковых ключ-значение, для возврата обчно используют ДТО. и вообще rest-ы ничего не должны
+    //  знать о сущностях модели, иначе мы жестко связаны - как следствие цена исправления велика
 
 	/**
 	 * Receive all lists from database.
@@ -63,7 +73,8 @@ public class ListsController {
 	private Map<String, String> getListFromDB(String id) {
 		return dbEmu.stream().filter(bdEmu -> bdEmu.get("id").equals(id))
 				.findFirst()
-				.orElseThrow(NotFoundException::new);
+				.orElseThrow(NotFoundException::new); // TODO: мы так бросаем исключение, то оно должно обрабытываться
+        // в ErrorHandler? пример https://mkyong.com/spring-boot/spring-rest-error-handling-example/
 	}
 
 	/**

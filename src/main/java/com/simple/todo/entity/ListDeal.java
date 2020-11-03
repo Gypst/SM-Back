@@ -9,6 +9,7 @@ import lombok.Setter;
 /**
  * List entity that displays a table in a database
  */
+// TODO: Java-doc на русском языке, т.к. команда русскоязычная
 @Entity
 @Table(name="LISTS")
 public class ListDeal {
@@ -32,7 +33,8 @@ public class ListDeal {
 	 * @param name The new value.
 	 */
 	@Column(name = "name", nullable = false)
-	@Getter @Setter
+	@Getter
+    @Setter
 	private String  name;
 
 	/**
@@ -50,7 +52,8 @@ public class ListDeal {
 	 * @param name The new value.
 	 */
 	@Column(name = "edition_date", nullable = false)
-	@Getter @Setter
+	@Getter
+    @Setter
 	private Date    dateEdition; //TODO: automatically add date/ Dell setter
 
 	protected ListDeal() {
