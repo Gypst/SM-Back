@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * RestController for lists from database.
+ * RestController для списка дел, который работает с БД через сервис ListsService.
  */
 @RestController
 @RequestMapping("list")

@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Ранее эта структура заменяла взаимодействие с реальной БД.
+ * @deprecated
+ */
 public class Database {
 	public static int counterOfLists = 12;
 	public static List<Map<String, String>> bdEmu = new ArrayList<Map<String, String>>() {{

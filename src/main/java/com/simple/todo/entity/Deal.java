@@ -7,17 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Deal entity that displays a table in a database
+ * Сущность дела, которая отражает строку из таблицы в базе данных
  */
 @Entity
 @Table(name = "DEALS")
 public class Deal {
 
 	/**
-	 * ID of the deal in database
-	 *
-	 * @param id New value for each deal.
-	 * @return The current id of this deal
+	 * ID дела в БД
 	 */
 	@Id
 	@Column(name = "id", nullable = false)
@@ -25,11 +22,7 @@ public class Deal {
 	private UUID    id;
 
 	/**
-	 * Name of the deal.
-	 * -- SETTER --
-	 * Changes the name of this deal.
-	 *
-	 * @param name The new value.
+	 * Название дела
 	 */
 	@Column(name = "name", nullable = false)
 	@Getter
@@ -37,11 +30,7 @@ public class Deal {
 	private String  name;
 
 	/**
-	 * Description of the person.
-	 * -- SETTER --
-	 * Changes the description of this deal.
-	 *
-	 * @param name The new value.
+	 * Описание дела
 	 */
 	@Column(name = "description")
 	@Getter
@@ -49,11 +38,7 @@ public class Deal {
 	private String  description;
 
 	/**
-	 * Priority of the person. It's enum value from 1 to 5 points.
-	 * -- SETTER --
-	 * Changes the priority of this deal.
-	 *
-	 * @param name The new value.
+	 * Приоритет дела (от 1 до 5)
 	 */
 	@Column(name = "priority")
 	@Getter
@@ -61,11 +46,7 @@ public class Deal {
 	private int priority; //from 1 to 5
 
 	/**
-	 * Priority of the person. It's may be done(true) or undone(false).
-	 * -- SETTER --
-	 * Changes the completeness of this deal.
-	 *
-	 * @param name The new value.
+	 * Готовность дела (true/false)
 	 */
 	@Column(name = "is_done")
 	@Getter
@@ -73,18 +54,14 @@ public class Deal {
 	private boolean isDone;
 
 	/**
-	 * Date of creation of the deal. It's automatically added date when was created
+	 * Дата создания дела. Автоматически заполняемое поле
 	 */
 	@Column(name = "creation_date", nullable = false)
 	@Getter
 	private final Date    dateCreation; //maybe must "final"
 
 	/**
-	 * Date of edition of the deal
-	 * -- SETTER --
-	 * Changes the date of edition for this deal.
-	 *
-	 * @param name The new value.
+	 * Дата изменения дела. Автоматически заполняемое поле
 	 */
 	@Column(name = "edition_date", nullable = false)
 	@Getter
@@ -92,11 +69,7 @@ public class Deal {
 	private Date    dateEdition; //TODO: automatically add date/ Dell setter. Modify dateEdition in all other setters.
 
 	/**
-	 * ID of the list which is foreign key.
-	 * -- SETTER --
-	 * Changes the foreign key of this deal.
-	 *
-	 * @param name The new value.
+	 * ID списка, в котором находится дело
 	 */
 	@Column(name = "listId")
 	@Getter
@@ -129,6 +102,11 @@ public class Deal {
 				id, name, description);
 	}
 
+	/**
+	 * Проверяет приоритет, который должен быть от 1 до 5.
+	 * @param priority Приоритет дела
+	 * @return "ok"/"fail"
+	 */
 	public static String checkPriority(int priority){
 		if (priority > 0 && priority <= 5){
 			return "ok";
@@ -136,9 +114,14 @@ public class Deal {
 		return "fail";
 	}
 
+	/**
+	 * Проверяет длинну дела (не больше 500)
+	 * @param description Строка описания дела
+	 * @return "ok"/"Bad length of parameter description"
+	 */
 	public static String checkDescription(String description) {
 		int descriptionLength = description.length();
-		if (descriptionLength > 500) return "Bad length of parameter description";
+		if (descriptionLength >= 500) return "Bad length of parameter description";
 		return "ok";
 	}
 

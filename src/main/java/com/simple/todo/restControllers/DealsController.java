@@ -20,13 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * RestController for deals from database
+ * RestController для дел, который работает с БД через сервис DealService.
  */
 @RestController
 @RequestMapping("deal")
 public class DealsController {
-	private List<Map<String, String>> bdEmu = Database.bdEmu;
-
 	private final DealService dealService;
 
 	@Autowired

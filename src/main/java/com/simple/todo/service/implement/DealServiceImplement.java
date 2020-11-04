@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Реализация интерфейса DealService
+ */
 @Service
 public class DealServiceImplement implements DealService {
 
@@ -29,6 +32,9 @@ public class DealServiceImplement implements DealService {
 	private final ListsService listsService;
 
 
+	/**
+	 * Конструктор сервиса
+	 */
 	@Autowired
 	public DealServiceImplement(DealRepository dealRepository, ListDealRepository listDealRepository, ListsService listsService) {
 		this.dealRepository = dealRepository;
@@ -162,6 +168,9 @@ public class DealServiceImplement implements DealService {
 		return Optional.empty();
 	}
 
+	/**
+	 * Проверяет список и, если он существует, обновляет его готовность (done)
+	 */
 	private boolean checkIfListExistedAndUpdate(Deal deal, boolean newDealStatusToUpdate) {
 		Optional<ListDeal> searchList = findListById(deal.getListId());
 		if (searchList.isPresent()) {
@@ -181,6 +190,9 @@ public class DealServiceImplement implements DealService {
 		return false;
 	}
 
+	/**
+	 * Проверяет список и, если он существует, обновляет его готовность (done)
+	 */
 	private boolean checkIfListExistedAndUpdate(Deal deal) {
 		Optional<ListDeal> searchList = findListById(deal.getListId());
 		if (searchList.isPresent()) {

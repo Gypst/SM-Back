@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Реализация интерфейса ListsService
+ */
 @Service
 public class ListsServiceImplement implements ListsService {
 
@@ -96,7 +99,7 @@ public class ListsServiceImplement implements ListsService {
 	}
 
 	/**
-	 * Проверяем стоит ли выставить списку статус сделан, например когда изменяем одно из task в списке или удаляем не сделанное task
+	 * Проверяет должен ли список быть сделан (поле done у ListDeal)
 	 */
 	@Override
 	public void checkIfListShouldBeDone(ListDeal list, UUID excludeCheckDealId) {

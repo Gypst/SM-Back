@@ -12,6 +12,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Репозиторий дел, наследуемый от JpaRepository & JpaSpecificationExecutor.
+ * Используется для взаимодействия с БД.
+ */
 @Repository
 public interface DealRepository extends JpaRepository<Deal, UUID>, JpaSpecificationExecutor<Deal> {
 

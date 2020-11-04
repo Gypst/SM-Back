@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Сервис для работы с сущностью List
+ * Интерфейс предполагающий работу с списком дел из БД
  */
 public interface ListsService {
 

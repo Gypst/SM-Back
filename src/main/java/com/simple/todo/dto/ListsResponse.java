@@ -4,6 +4,9 @@ import com.simple.todo.entity.ListDeal;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
+/**
+ * Класс, который используется контроллером для ответа на запросы пользователей.
+ */
 @Data
 public class ListsResponse {
 

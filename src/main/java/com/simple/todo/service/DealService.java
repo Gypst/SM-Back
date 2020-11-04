@@ -9,6 +9,9 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Интерфейс предполагающий работу с делами из БД
+ */
 public interface DealService {
 
 		/**
