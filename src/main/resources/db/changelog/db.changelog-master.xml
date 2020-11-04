@@ -5,14 +5,8 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include  file="db/changelog/changes/Lists.xml"/>
-    <include  file="db/changelog/changes/Deals.xml"/>
-
-    <!--
-    TODO: имена файлов миграций лучше давать исходя из шаблона YYYYMMDDHHmmSS_осмысленная_фраза_на_английском_языке
-    таким образом будет понятно в какой последовательности писались миграции без заглядывания с свойства файла
-    идентификатор changeSet YYYYMMDDHHmmSS_число_осмысленная_фраза_на_английском_языке
-    -->
+    <include  file="db/changelog/changes/20201104193355_Add_Deals_Table.xml"/>
+    <include  file="db/changelog/changes/20201104193626_Add_Lists_Table.xml"/>
 
 
 </databaseChangeLog>
