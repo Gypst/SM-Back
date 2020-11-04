@@ -32,7 +32,8 @@ public class Deal {
 	 * @param name The new value.
 	 */
 	@Column(name = "name", nullable = false)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String  name;
 
 	/**
@@ -43,7 +44,8 @@ public class Deal {
 	 * @param name The new value.
 	 */
 	@Column(name = "description")
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String  description;
 
 	/**
@@ -54,8 +56,9 @@ public class Deal {
 	 * @param name The new value.
 	 */
 	@Column(name = "priority")
-	@Getter @Setter
-	private Priority priority; //from 1 to 5
+	@Getter
+	@Setter
+	private int priority; //from 1 to 5
 
 	/**
 	 * Priority of the person. It's may be done(true) or undone(false).
@@ -65,7 +68,8 @@ public class Deal {
 	 * @param name The new value.
 	 */
 	@Column(name = "is_done")
-	@Getter @Setter
+	@Getter
+	@Setter
 	private boolean isDone;
 
 	/**
@@ -83,7 +87,8 @@ public class Deal {
 	 * @param name The new value.
 	 */
 	@Column(name = "edition_date", nullable = false)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Date    dateEdition; //TODO: automatically add date/ Dell setter. Modify dateEdition in all other setters.
 
 	/**
@@ -94,8 +99,9 @@ public class Deal {
 	 * @param name The new value.
 	 */
 	@Column(name = "list_id")
-	@Getter @Setter
-	private UUID List_id;
+	@Getter
+	@Setter
+	private UUID list_id;
 
 	protected Deal() {
 		this.isDone = false;
@@ -104,7 +110,7 @@ public class Deal {
 		this.dateEdition = date;
 	}
 
-	public Deal(String name, String description, Priority priority) {
+	public Deal(String name, String description, int priority) {
 		this.name = name;
 		this.description = description;
 		this.priority = priority;

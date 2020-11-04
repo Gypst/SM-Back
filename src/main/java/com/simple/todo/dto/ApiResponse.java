@@ -2,6 +2,10 @@ package com.simple.todo.dto;
 
 import lombok.Data;
 
+/**
+ * Класс формирует json-объект, который возвратится в теле ответа.
+ * Ответ типа "успешно-неуспешно" с информационным сообщением.
+ */
 @Data
 public class ApiResponse {
 

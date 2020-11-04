@@ -3,12 +3,16 @@ package com.simple.todo.entity;
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.*;
+
+import com.sun.istack.NotNull;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * List entity that displays a table in a database
  */
+@Data
 @Entity
 @Table(name="LISTS")
 public class ListDeal {
@@ -32,7 +36,8 @@ public class ListDeal {
 	 * @param name The new value.
 	 */
 	@Column(name = "name", nullable = false)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String  name;
 
 	/**
@@ -50,8 +55,14 @@ public class ListDeal {
 	 * @param name The new value.
 	 */
 	@Column(name = "edition_date", nullable = false)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Date    dateEdition; //TODO: automatically add date/ Dell setter
+
+	@Column(name = "is_done", nullable = false)
+	@Getter
+	@Setter
+	private boolean done;
 
 	protected ListDeal() {
 		Date date = new Date();

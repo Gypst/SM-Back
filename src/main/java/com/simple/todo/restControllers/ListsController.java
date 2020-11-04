@@ -25,17 +25,13 @@ import java.util.*;
 @RequestMapping("list")
 public class ListsController {
 	private List<Map<String, String>> dbEmu = Database.bdEmu;
+	// TODO: вместо этого нам нужны сервисы и интерфейсы к ним. в рестах сервисы подключаются через интерфейсы
+	//  и аннотоцию @Autowired
+	//  интерфейсы нужны к сервисам, чтоб мы могли быстро подменить реализацию
 
-	@PostMapping("/testAdd")
-	public ListsResponse testAdd(@RequestParam(name = "t", defaultValue = "List name") String text){
-		ListDeal listDeal = new ListDeal(text);
-		Pageable pageable = new Pageable;
-		final Page<ListDeal> page = new PageImpl<>(listDeal, pageable, 1);
-		page.toSet(listDeal);
-		ListsResponse(1, 1, page);
-
-		return
-	}
+	// TODO: если метод rest что-то возвращает, то лучше это делать не через Map<String, String>, т.к. объект может быть
+	//  сложнее чем набор строковых ключ-значение, для возврата обчно используют ДТО. и вообще rest-ы ничего не должны
+	//  знать о сущностях модели, иначе мы жестко связаны - как следствие цена исправления велика
 
 	/**
 	 * Receive all lists from database.
@@ -80,7 +76,8 @@ public class ListsController {
 	private Map<String, String> getListFromDB(String id) {
 		return dbEmu.stream().filter(bdEmu -> bdEmu.get("id").equals(id))
 				.findFirst()
-				.orElseThrow(NotFoundException::new);
+				.orElseThrow(NotFoundException::new);// TODO: мы так бросаем исключение, то оно должно обрабытываться
+		// в ErrorHandler? пример https://mkyong.com/spring-boot/spring-rest-error-handling-example/
 	}
 
 	/**
@@ -90,12 +87,12 @@ public class ListsController {
 	 * @return
 	 */
 	@PostMapping
-	public Map<String, String> addList(@RequestBody Map<String, String> list){
+	public ListsResponse addList(@RequestBody ListDeal list){
 		Map<String, String> toInsert = list;
 		int t = ++Database.counterOfLists;
 		toInsert.put("id", Integer.toString(t));
 		dbEmu.add(list);
-		return list;
+		return ListsService.;
 	}
 
 	/**
