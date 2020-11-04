@@ -21,7 +21,7 @@
             <column name="edition_date" type="timestamp without time zone">
                 <constraints nullable="false"/>
             </column>
-            <column name="is_done" type="timestamp without time zone">
+            <column name="is_done" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>
