@@ -164,12 +164,7 @@ public class DealsController {
 			}
 		}
 
-		UUID objListId = deal.getList_id();
-		if (objListId == null) {
-			return new ResponseEntity<>(new ApiResponse(false, "Parameter list_Id not provided"), HttpStatus.NOT_ACCEPTABLE);
-		}
-
-		Deal newDeal = new Deal(deal.getName(), deal.getList_id(), objDescription, objPriority);
+		Deal newDeal = new Deal(deal.getName(), objDescription, objPriority);
 
 		try {
 			Optional<Deal> editResult = dealService.addDeal(newDeal);

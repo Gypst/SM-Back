@@ -65,12 +65,14 @@ public class ListDeal {
 	private boolean done;
 
 	protected ListDeal() {
+		this.id = UUID.randomUUID();
 		Date date = new Date();
 		this.dateCreation = date;
 		this.dateEdition = date;
 	}
 
 	public ListDeal(String name) {
+		this.id = UUID.randomUUID();
 		this.name = name;
 		Date date = new Date();
 		this.dateCreation = date;

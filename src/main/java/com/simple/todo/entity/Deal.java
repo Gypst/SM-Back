@@ -104,15 +104,16 @@ public class Deal {
 	private UUID list_id;
 
 	protected Deal() {
+		this.id = UUID.randomUUID();
 		this.isDone = false;
 		Date date = new Date();
 		this.dateCreation = date;
 		this.dateEdition = date;
 	}
 
-	public Deal(String name, UUID id, String description, int priority) {
+	public Deal(String name, String description, int priority) {
 		this.name = name;
-		this.id = id;
+		this.id = UUID.randomUUID();
 		this.description = description;
 		this.priority = priority;
 		this.isDone = false;
