@@ -87,7 +87,7 @@ public class ListsServiceImplement implements ListsService {
 	public boolean deleteList(UUID id) {
 		Optional<ListDeal> searchResult = listRepository.findById(id);
 		if (searchResult.isPresent()) {
-			dealRepository.deleteByListId(id);
+			dealRepository.deleteByList_id(id);
 			listRepository.deleteById(id);
 			return true;
 		}
@@ -102,7 +102,7 @@ public class ListsServiceImplement implements ListsService {
 	public void checkIfListShouldBeDone(ListDeal list, UUID excludeCheckDealId) {
 		if (!list.isDone()) {
 			boolean checkResult = true;
-			List<Deal> listOfDeals = dealRepository.findAllByListId(list.getId());
+			List<Deal> listOfDeals = dealRepository.findAllByList_id(list.getId());
 
 			for (Deal deal : listOfDeals) {
 				if (!deal.isDone() && deal.getId() != excludeCheckDealId) {

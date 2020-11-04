@@ -30,16 +30,23 @@ public class DealsController {
 	private final DealService dealService;
 
 	@Autowired
-	DealsController(DealService dealService){this.dealService = dealService;}
+	DealsController(DealService dealService) {
+		this.dealService = dealService;
+	}
 
 	/**
-	 * Получение списков дел с пагинацией
+	 * Получение списков дел с пагинацией.
+	 * Ключи объекта:
+	 * В "numberOfElements" можно отправить нужное кол-во элем. для отображения.
+	 * "numberOfElements" содержит нужную страницу для открытия.
+	 * "SortParameter" содержит имя поля, по которуму будут отсортированы дела.
+	 * "SortType" как выводить дела.
 	 *
 	 * @param obj - объекст с параметрами
 	 * @return ResponseEntity со статусом
 	 */
 	@GetMapping(value = "/", produces = "application/json", consumes = "application/json")
-	public ResponseEntity<Object> getDeals(@RequestBody ObjectNode obj, OptionalInt numberOfElementsRequired) {
+	public ResponseEntity<Object> getDeals(@RequestBody ObjectNode obj) {
 		//DealSpecificationsBuilder builder = new DealSpecificationsBuilder(); //Это пригодится для фильтрации
 		int requestPage = 0;
 		int numberOfElements = 10;
@@ -71,7 +78,7 @@ public class DealsController {
 		if (obj.has("SortParameter")) {
 			SortParameter = obj.get("SortParameter").asText();
 
-			if (!(  SortParameter.equals("id") ||
+			if (!(SortParameter.equals("id") ||
 					SortParameter.equals("name") ||
 					SortParameter.equals("description") ||
 					SortParameter.equals("priority") ||
@@ -82,7 +89,7 @@ public class DealsController {
 				return new ResponseEntity<>(
 						new ApiResponse(false, "Bad SortParameter, it can be only id|" +
 								"list_id|name|dateCreation|dateEdition|description|priority|isDone"),
-								HttpStatus.NOT_ACCEPTABLE);
+						HttpStatus.NOT_ACCEPTABLE);
 			}
 		}
 
@@ -90,8 +97,8 @@ public class DealsController {
 			SortType = obj.get("SortType").asText();
 			if (!(SortType.equals("ascending") || SortType.equals("descending"))) {
 				return new ResponseEntity<>(new ApiResponse(false,
-							"Bad SortType, it can be only ascending|descending"),
-									HttpStatus.NOT_ACCEPTABLE);
+						"Bad SortType, it can be only ascending|descending"),
+						HttpStatus.NOT_ACCEPTABLE);
 			}
 		}
 
@@ -128,17 +135,171 @@ public class DealsController {
 		}
 	}
 
-	@GetMapping("/")
-	public Deal getDeal(long id){return null;}
+	/**
+	 * Добавление нового дела
+	 *
+	 * @param deal - сущность списка
+	 * @return ResponseEntity со статусом
+	 */
+	@PostMapping(value = "/", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Object> addDeal(@RequestBody Deal deal) {
+		String objName = deal.getName();
+		if (objName == null) {
+			return new ResponseEntity<>(new ApiResponse(false, "Parameter name not provided"), HttpStatus.NOT_ACCEPTABLE);
+		}
 
-	@PostMapping("/addDeal")
-	public boolean addDeal(@RequestParam(name = "name") String name){return false;}
+		int objPriority = deal.getPriority();
+		String objPriorityCheckResult = Deal.checkPriority(objPriority);
+		if (!objPriorityCheckResult.equals("ok")) {
+			return new ResponseEntity<>(new ApiResponse(false, objPriorityCheckResult), HttpStatus.NOT_ACCEPTABLE);
+		}
 
-	@PostMapping("/deleteDeal")
-	public boolean deleteDeal(@RequestParam(name = "id") long id){return  false;}
+		String objDescription = deal.getDescription();
+		if (objDescription == null) {
+			objDescription = "";
+		} else {
+			String objDescriptionCheckResult = Deal.checkDescription(objDescription);
+			if (!objDescriptionCheckResult.equals("ok")) {
+				return new ResponseEntity<>(new ApiResponse(false, objDescriptionCheckResult), HttpStatus.NOT_ACCEPTABLE);
+			}
+		}
 
-	@PostMapping("/deleteAllDeal")
-	public boolean deleteAllDeal(){return  false;}
+		UUID objListId = deal.getList_id();
+		if (objListId == null) {
+			return new ResponseEntity<>(new ApiResponse(false, "Parameter list_Id not provided"), HttpStatus.NOT_ACCEPTABLE);
+		}
 
-	// TODO: не хватает метода посмотреть все дела в списке с фильрацией сортировкой и пагинацией
+		Deal newDeal = new Deal(deal.getName(), deal.getList_id(), objDescription, objPriority);
+
+		try {
+			Optional<Deal> editResult = dealService.addDeal(newDeal);
+
+			if (editResult.isPresent()) {
+				return new ResponseEntity<>(editResult.get(), HttpStatus.CREATED);
+			}
+
+			return new ResponseEntity<>(new ApiResponse(false, "List not found by list_Id or database error"), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * Изменение сущности дела.
+	 *
+	 * @param obj - объекст с разными параметрами
+	 * @return ResponseEntity со статусом
+	 */
+	@PutMapping(value = "/", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Object> changeDeal(@RequestBody ObjectNode obj) {
+		Optional<String> name = Optional.empty();
+		Optional<String> description = Optional.empty();
+		Optional<Boolean> done = Optional.empty();
+		Optional<Integer> priority = Optional.empty();
+
+		if (!obj.has("id")) {
+			return new ResponseEntity<>(new ApiResponse(false, "Parameter id not provided"), HttpStatus.NOT_ACCEPTABLE);
+		}
+		String id = obj.get("id").asText();
+		if (id.equals("") || id.isEmpty()) {
+			return new ResponseEntity<>(new ApiResponse(false, "Null id"), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		if (obj.has("name")) {
+			String objName = obj.get("name").asText();
+			if (objName.isEmpty()) {
+				return new ResponseEntity<>(new ApiResponse(false, "Empty name"), HttpStatus.NOT_ACCEPTABLE);
+			} else {
+				name = Optional.of(objName);
+			}
+		}
+
+		if (obj.has("description")) {
+			String objDescription = obj.get("description").asText();
+			if (objDescription.isEmpty()) {
+				return new ResponseEntity<>(new ApiResponse(false, "Empty description"), HttpStatus.NOT_ACCEPTABLE);
+			} else {
+				description = Optional.of(objDescription);
+			}
+		}
+
+		if (obj.has("done")) {
+			done = Optional.of(obj.get("done").asBoolean());
+		}
+
+		if (obj.has("priority")) {
+			int objPriority = obj.get("priority").asInt();
+			String objPriorityCheckResult = Deal.checkPriority(objPriority);
+			if (!objPriorityCheckResult.equals("ok")) {
+				return new ResponseEntity<>(new ApiResponse(false, objPriorityCheckResult), HttpStatus.NOT_ACCEPTABLE);
+			} else {
+				priority = Optional.of(objPriority);
+			}
+		}
+
+		if (!name.isPresent() && !description.isPresent() && !done.isPresent() && !priority.isPresent()) {
+			return new ResponseEntity<>(new ApiResponse(false, "None of parameter name,description,priority,done provided"), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		try {
+			Optional<Deal> editResult = dealService.changeDeal(UUID.fromString(id), name.toString(), description, priority, done);
+
+			if (editResult.isPresent()) {
+				return new ResponseEntity<>(editResult.get(), HttpStatus.OK);
+			}
+
+			return new ResponseEntity<>(new ApiResponse(false, "Deal not found, or database error (List not found)"), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * Установление готовности (done) дела
+	 *
+	 * @param id - id сущности
+	 * @return ResponseEntity со статусом
+	 */
+	@PutMapping(value = "/setDone/{id}", produces = "application/json")
+	public ResponseEntity<Object> setDone(@PathVariable(name = "id") String id) {
+		if (id.isEmpty()) {
+			return new ResponseEntity<>(new ApiResponse(false, "Empty id"), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		try {
+			Optional<Deal> editDeal = dealService.setDone(UUID.fromString(id));
+
+			if (editDeal.isPresent()) {
+				return new ResponseEntity<>(editDeal.get(), HttpStatus.OK);
+			}
+
+			return new ResponseEntity<>(new ApiResponse(false, "Deal not found, or database error (List not found)"), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * Удаление сущности дела
+	 *
+	 * @param id - id сущности
+	 * @return ResponseEntity со статусом
+	 */
+	@DeleteMapping(value = "/{id}", produces = "application/json")
+	public ResponseEntity<Object> deleteDeal(@PathVariable(name = "id") String id) {
+		if (id.isEmpty()) {
+			return new ResponseEntity<>(new ApiResponse(false, "Empty id"), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		try {
+			if (dealService.deleteDeal(UUID.fromString(id))) {
+				return new ResponseEntity<>(new ApiResponse(true, "Deal deleted"), HttpStatus.OK);
+			}
+
+			return new ResponseEntity<>(new ApiResponse(false, "Deal not found, or database error (List not found)"), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

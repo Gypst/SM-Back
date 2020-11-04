@@ -110,8 +110,9 @@ public class Deal {
 		this.dateEdition = date;
 	}
 
-	public Deal(String name, String description, int priority) {
+	public Deal(String name, UUID id, String description, int priority) {
 		this.name = name;
+		this.id = id;
 		this.description = description;
 		this.priority = priority;
 		this.isDone = false;
@@ -125,6 +126,19 @@ public class Deal {
 		return String.format(
 				"Deal[id=%d, name='%s', description='%s']",
 				id, name, description);
+	}
+
+	public static String checkPriority(int priority){
+		if (priority > 0 && priority <= 5){
+			return "ok";
+		}
+		return "fail";
+	}
+
+	public static String checkDescription(String description) {
+		int descriptionLength = description.length();
+		if (descriptionLength > 500) return "Bad length of parameter description";
+		return "ok";
 	}
 
 }

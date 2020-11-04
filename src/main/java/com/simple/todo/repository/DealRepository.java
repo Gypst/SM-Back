@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DealRepository extends JpaRepository<Deal, UUID>, JpaSpecificationExecutor<Deal> {
 
-	void deleteByListId(UUID id);
+	void deleteByList_id(UUID id);
 
-	List<Deal> findAllByListId(UUID id);
+	List<Deal> findAllByList_id(UUID id);
 
-	Page<Deal> findAllByListId(Pageable pageable, UUID id);
+	Page<Deal> findAllByList_id(Pageable pageable, UUID id);
 }

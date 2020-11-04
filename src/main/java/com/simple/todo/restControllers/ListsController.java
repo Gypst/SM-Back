@@ -13,11 +13,6 @@ import org.springframework.data.domain.Page;
 
 import java.util.*;
 
-/*
-@Post методы не должны содержать в URL передаваемые аргументы, они должны быть в теле зашифрованы.
- */
-//Возвращаемые значения только для отладки
-
 /**
  * RestController for lists from database.
  */
@@ -25,10 +20,11 @@ import java.util.*;
 @RequestMapping("list")
 public class ListsController {
 	private List<Map<String, String>> dbEmu = Database.bdEmu;
-	// TODO: вместо этого нам нужны сервисы и интерфейсы к ним. в рестах сервисы подключаются через интерфейсы
-	//  и аннотоцию @Autowired
-	//  интерфейсы нужны к сервисам, чтоб мы могли быстро подменить реализацию
 
+	private final ListsService listsService;
+
+	@Autowired
+	ListsController(ListsService listsService){this.listsService = listsService;}
 	// TODO: если метод rest что-то возвращает, то лучше это делать не через Map<String, String>, т.к. объект может быть
 	//  сложнее чем набор строковых ключ-значение, для возврата обчно используют ДТО. и вообще rest-ы ничего не должны
 	//  знать о сущностях модели, иначе мы жестко связаны - как следствие цена исправления велика
@@ -86,14 +82,14 @@ public class ListsController {
 	 * @param list Required list which will be added to the database
 	 * @return
 	 */
-	@PostMapping
-	public ListsResponse addList(@RequestBody ListDeal list){
-		Map<String, String> toInsert = list;
-		int t = ++Database.counterOfLists;
-		toInsert.put("id", Integer.toString(t));
-		dbEmu.add(list);
-		return ListsService.;
-	}
+//	@PostMapping
+//	public ListsResponse addList(@RequestBody ListDeal list){
+//		Map<String, String> toInsert = list;
+//		int t = ++Database.counterOfLists;
+//		toInsert.put("id", Integer.toString(t));
+//		dbEmu.add(list);
+//		return ListsService.;
+//	}
 
 	/**
 	 * Update a list with the current id.

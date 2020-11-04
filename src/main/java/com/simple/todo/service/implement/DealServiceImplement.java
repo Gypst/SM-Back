@@ -51,7 +51,7 @@ public class DealServiceImplement implements DealService {
 
 	@Override
 	public DealResponse getAll(Pageable pageable, UUID id) {
-		Page<Deal> searchResult = dealRepository.findAllByListId(pageable, id);
+		Page<Deal> searchResult = dealRepository.findAllByList_id(pageable, id);
 		return getDealResponse(searchResult);
 	}
 
