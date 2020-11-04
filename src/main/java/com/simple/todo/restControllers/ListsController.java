@@ -53,7 +53,12 @@ public class ListsController {
 	}
 
 	/**
-	 * Получение списков List с пагинацией
+	 * Получение списков List с пагинацией.
+	 * Ключи объекта:
+	 * requestPage - запрашиваемая страница
+	 * numberOfElements - кол-во элементов на странице
+	 * SortParameter - по какому полю сортируем
+	 * SortType - по возростанию (ascending) или убыванию (descending)
 	 *
 	 * @param obj - объекст с разными параметрами
 	 * @return ResponseEntity со статусом
@@ -141,7 +146,8 @@ public class ListsController {
 	@PutMapping(value = "/", produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> changeList(@RequestBody ObjectNode obj) {
 		if (!obj.has("id") || !obj.has("name")) {
-			return new ResponseEntity<>(new ApiResponse(false, "Parameter id or name not provided"), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>(new ApiResponse(false, "Parameter id or name not provided"),
+																				HttpStatus.NOT_ACCEPTABLE);
 		}
 
 		String objId = obj.get("id").asText();

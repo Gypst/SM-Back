@@ -51,7 +51,7 @@ public class DealServiceImplement implements DealService {
 
 	@Override
 	public DealResponse getAll(Pageable pageable, UUID id) {
-		Page<Deal> searchResult = dealRepository.findAllByList_id(pageable, id);
+		Page<Deal> searchResult = dealRepository.findAllByListId(pageable, id);
 		return getDealResponse(searchResult);
 	}
 
@@ -163,7 +163,7 @@ public class DealServiceImplement implements DealService {
 	}
 
 	private boolean checkIfListExistedAndUpdate(Deal deal, boolean newDealStatusToUpdate) {
-		Optional<ListDeal> searchList = findListById(deal.getList_id());
+		Optional<ListDeal> searchList = findListById(deal.getListId());
 		if (searchList.isPresent()) {
 			ListDeal found = searchList.get();
 
@@ -182,7 +182,7 @@ public class DealServiceImplement implements DealService {
 	}
 
 	private boolean checkIfListExistedAndUpdate(Deal deal) {
-		Optional<ListDeal> searchList = findListById(deal.getList_id());
+		Optional<ListDeal> searchList = findListById(deal.getListId());
 		if (searchList.isPresent()) {
 			ListDeal findedList = searchList.get();
 

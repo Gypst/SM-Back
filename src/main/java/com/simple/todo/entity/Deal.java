@@ -98,10 +98,10 @@ public class Deal {
 	 *
 	 * @param name The new value.
 	 */
-	@Column(name = "list_id")
+	@Column(name = "listId")
 	@Getter
 	@Setter
-	private UUID list_id;
+	private UUID listId;
 
 	protected Deal() {
 		this.id = UUID.randomUUID();

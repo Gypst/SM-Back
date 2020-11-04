@@ -28,7 +28,7 @@
             <column name="edition_date" type="timestamp without time zone">
                 <constraints nullable="false"/>
             </column>
-            <column name="list_id" type="UUID">
+            <column name="listId" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>
