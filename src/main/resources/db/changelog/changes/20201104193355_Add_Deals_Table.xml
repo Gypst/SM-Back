@@ -4,21 +4,38 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="01" author="ABC">
+    <changeSet id="02" author="ABC">
 
-<!--        TODO: обязательно нужен комментарий к задаче, кторый обычно сводится к "Номер в жире, краткое поисание ченжсета на русском"-->
+        <!--
+        Эта миграция создаёт таблицу дел
+        -->
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="DEALS"/>
+            </not>
+        </preConditions>
 
-        <createTable tableName="LISTS" remarks="A table to contain Lists that will contain task">
+        <createTable tableName="DEALS" remarks="A table to contain tasks">
             <column name="id" type="UUID">
                 <constraints nullable="false" unique="true" primaryKey="true"/>
             </column>
             <column name="name" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
+            <column name="description" type="text">
+            </column>
+            <column name="priority" type="int">
+            </column>
+            <column name="is_done" type="boolean">
+                <constraints nullable="false"/>
+            </column>
             <column name="creation_date" type="timestamp without time zone">
                 <constraints nullable="false"/>
             </column>
             <column name="edition_date" type="timestamp without time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="listId" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>
