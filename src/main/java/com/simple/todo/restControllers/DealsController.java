@@ -136,7 +136,7 @@ public class DealsController {
 	/**
 	 * Добавление нового дела
 	 *
-	 * @param deal - сущность списка
+	 * @param deal - сущность дела
 	 * @return ResponseEntity со статусом
 	 */
 	@PostMapping(value = "/", produces = "application/json", consumes = "application/json")
@@ -158,11 +158,15 @@ public class DealsController {
 		} else {
 			String objDescriptionCheckResult = Deal.checkDescription(objDescription);
 			if (!objDescriptionCheckResult.equals("ok")) {
-				return new ResponseEntity<>(new ApiResponse(false, objDescriptionCheckResult), HttpStatus.NOT_ACCEPTABLE);
+				return new ResponseEntity<>(new ApiResponse(false, "Description needed!"), HttpStatus.NOT_ACCEPTABLE);
 			}
 		}
 
-		Deal newDeal = new Deal(deal.getName(), objDescription, objPriority);
+		if (deal.getListId() == null){
+			return new ResponseEntity<>(new ApiResponse(false, "ListId needed!"), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		Deal newDeal = new Deal(deal.getName(), objPriority, objDescription, deal.getListId());
 
 		try {
 			Optional<Deal> editResult = dealService.addDeal(newDeal);

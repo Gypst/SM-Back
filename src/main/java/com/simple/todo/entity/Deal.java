@@ -1,6 +1,7 @@
 package com.simple.todo.entity;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.*;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class Deal {
 	 * ID дела в БД
 	 */
 	@Id
-	@Column(name = "id", nullable = false)
+	@Column(name = "id")
 	@Getter
 	private UUID    id;
 
@@ -84,7 +85,7 @@ public class Deal {
 		this.dateEdition = date;
 	}
 
-	public Deal(String name, String description, int priority) {
+	public Deal(String name, int priority, String description, UUID listId) {
 		this.name = name;
 		this.id = UUID.randomUUID();
 		this.description = description;
@@ -93,6 +94,7 @@ public class Deal {
 		Date date = new Date();
 		this.dateCreation = date;
 		this.dateEdition = date;
+		this.listId = listId;
 	}
 
 	@Override
@@ -105,13 +107,13 @@ public class Deal {
 	/**
 	 * Проверяет приоритет, который должен быть от 1 до 5.
 	 * @param priority Приоритет дела
-	 * @return "ok"/"fail"
+	 * @return "ok"/"Priority fail"
 	 */
 	public static String checkPriority(int priority){
 		if (priority > 0 && priority <= 5){
 			return "ok";
 		}
-		return "fail";
+		return "Priority fail!";
 	}
 
 	/**
