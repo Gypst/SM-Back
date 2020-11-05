@@ -9,6 +9,11 @@
         <!--
         Эта миграция создаёт таблицу дел
         -->
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="DEALS"/>
+            </not>
+        </preConditions>
 
         <createTable tableName="DEALS" remarks="A table to contain tasks">
             <column name="id" type="UUID">

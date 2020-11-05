@@ -9,6 +9,11 @@
         <!--
         Эта миграция создаёт таблицу для списка дел
         -->
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LISTS"/>
+            </not>
+        </preConditions>
 
         <createTable tableName="LISTS" remarks="A table to contain Lists that will contain task">
             <column name="id" type="UUID">
