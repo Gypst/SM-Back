@@ -90,8 +90,8 @@ public class ListsServiceImplement implements ListsService {
 	public boolean deleteList(UUID id) {
 		Optional<ListDeal> searchResult = listRepository.findById(id);
 		if (searchResult.isPresent()) {
-			dealRepository.deleteByListId(id);
 			listRepository.deleteById(id);
+			//dealRepository.findAllByListId(id); //TODO: проверка дел без родителя-спискаДел
 			return true;
 		}
 
